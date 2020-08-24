@@ -1,12 +1,12 @@
-from telnetlib import EC
 from time import sleep
+import logging
 
-from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.chrome import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.wait import WebDriverWait
+
 
 from locators.insta_locators import instaLocators
+
+logger = logging.getLogger('scraping')  # singleton pattern
 
 
 class Automation:
@@ -35,20 +35,35 @@ class Automation:
         login_button = self.browser.find_element_by_xpath(instaLocators.NOTIFICATIONS)
         login_button.click()
 
+    def comment_something(self, number_of_times:int,number_of_identifications:int = 0) -> bool:
+        """Comment a post number_of_times that you want
 
-    def comment_something(self):
-        #click in the comment box
-        comment_box = self.browser.find_element_by_xpath(instaLocators.COMMENT_BOX)
-        comment_box.click()
+           number_of_times = 2 -> comment a post 2 times
 
-        #write stuff
-        comment_box = self.browser.find_element_by_xpath(instaLocators.COMMENT_BOX)
-        comment_box.send_keys("ola")
+           Returns:
+               bool: return true if post all comments successfully
 
-        #click on the publish
-        comment_button = self.browser.find_element_by_xpath(instaLocators.COMMENT_BUTTON)
-        comment_button.click()
+           """
+        for i in range(0, number_of_times):
+            try:
+                #click in the comment box
+                comment_box = self.browser.find_element_by_xpath(instaLocators.COMMENT_BOX)
+                comment_box.click()
 
+                #write stuff
+                comment_box = self.browser.find_element_by_xpath(instaLocators.COMMENT_BOX)
+                comment_box.send_keys("ola")
+
+                #click on the publish
+                comment_button = self.browser.find_element_by_xpath(instaLocators.COMMENT_BUTTON)
+                comment_button.click()
+                logger.info('comment successfully')
+                sleep(2)
+            except:
+                logger.error('some error when trying comment some stuff')
+                return False
+
+        return True
 
     def like_post(self):
         aux = self.browser.find_element_by_css_selector("button div span svg._8-yf5")
@@ -59,5 +74,18 @@ class Automation:
             self.browser.implicitly_wait(5)
             like_button.click()
 
-
-
+    def follow(self):
+        try:
+            aux = self.browser.find_element_by_xpath("//*[@id='react-root']/section/main/div/div[1]/article/header/div[2]/div[1]/div[2]/button")
+            print(aux.text)
+            if aux.text == 'Follow':
+                aux.click()
+            else:
+                print('already following')
+        except:
+            print('Private profile')
+            try:
+                aux2 = self.browser.find_element_by_xpath("//*[@id='react-root']/section/main/div/header/section/div[1]/div[1]/button")
+                aux2.click()
+            except:
+                print('rip')

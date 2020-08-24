@@ -16,7 +16,8 @@ browser.implicitly_wait(5)
 browser.get("http://instagram.com")
 com = Automation(browser)
 com.login()
-browser.get("https://www.instagram.com/p/CCrOLnpnL7CjZc3RFyu3L13MI6M_QxAlVy-7Dk0/")
+browser.get("https://www.instagram.com/p/CEKUlf7jLfS/")
+#browser.execute_script("window.history.go(-1)") -> volta para trás
 #comment
-com.like_post()
+com.follow()
 
