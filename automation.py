@@ -3,7 +3,7 @@ import logging
 
 from selenium.webdriver.chrome import webdriver
 
-
+from script_files import import_login
 from locators.insta_locators import instaLocators
 
 logger = logging.getLogger('scraping')  # singleton pattern
@@ -12,16 +12,21 @@ logger = logging.getLogger('scraping')  # singleton pattern
 class Automation:
     def __init__(self, browser: webdriver):
         self.browser = browser
+        self.login_info = import_login.Login_info()
 
-    def login(self):
+    def login(self) -> bool:
+        if len(self.login_info.info) < 1:
+            return False
+        username = self.login_info.info[0]['username']
+        password = self.login_info.info[0]['password']
         login_link = self.browser.find_element_by_xpath(instaLocators.LOGIN_BOX)
         login_link.click()
         sleep(2)
         username_input = self.browser.find_element_by_css_selector("input[name='username']")
         password_input = self.browser.find_element_by_css_selector("input[name='password']")
 
-        username_input.send_keys("fabiouds12345")
-        password_input.send_keys("catarina12345")
+        username_input.send_keys(username)
+        password_input.send_keys(password)
 
         # click on login button
         login_button = self.browser.find_element_by_xpath(instaLocators.LOGIN_BUTTON)
@@ -34,6 +39,7 @@ class Automation:
         # click on Not Now (turn on notifications)
         login_button = self.browser.find_element_by_xpath(instaLocators.NOTIFICATIONS)
         login_button.click()
+        return True
 
     def comment_something(self, number_of_times:int,number_of_identifications:int = 0) -> bool:
         """Comment a post number_of_times that you want
