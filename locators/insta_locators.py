@@ -1,4 +1,4 @@
-class instaLocators:
+class InstaLocators:
     LOGIN_BOX = "//*[@id='loginForm']/div/div[1]/div/label/input"
     LOGIN_BUTTON = "//button[@type='submit']"
     NOTIFICATIONS = "/html/body/div[4]/div/div/div/div[3]/button[2]"
@@ -6,5 +6,10 @@ class instaLocators:
     COMMENT_BOX = "//*[@id='react-root']/section/main/div/div[1]/article/div[3]/section[3]/div/form/textarea"
     COMMENT_BUTTON = "//*[@id='react-root']/section/main/div/div[1]/article/div[3]/section[3]/div/form/button"
     LIKE_BUTTON = "//*[@id='react-root']/section/main/div/div[1]/article/div[3]/section[1]/span[1]/button"
-
+    FOLLOW_BUTTON = "div button.sqdOP.L3NKy.y3zKF"
+    FOLLOW_BUTTON_PRIVATE = "span button._5f5mN.jIbKX._6VtSN.yZn4P"
+    LOAD_MORE_COMMENTS = "//*[@id='react-root']/section/main/div/div[1]/article/div[3]/div[1]/ul/li/div/button"
+    LIST_OF_COMMENTS = "a.sqdOP.yWX7d._8A5w5.ZIAjV"
+    FOLLOWS_SECTIONS = "//*[@id='react-root']/section/main/div/header/section/ul/li[2]"
+    LIST_OF_FOLLOWS = "li div div div div span a.FPmhX.notranslate._0imsa"
 
