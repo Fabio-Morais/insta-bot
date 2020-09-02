@@ -36,30 +36,39 @@ class JsonFile:
 
         return {}
 
-    def increase_comment(self, username: str):
-        date_now = datetime.datetime.now().strftime('%d-%m-%Y %H:%M')
-        date_1 = datetime.datetime.strptime(date_now, '%d-%m-%Y %H:%M')
-        end_date = date_1
+    def increase_comment(self, username: str) -> bool:
+        date_now_string = datetime.datetime.now().strftime('%d-%m-%Y %H:%M')
+        date_now = datetime.datetime.strptime(date_now_string, '%d-%m-%Y %H:%M')
+        aux = self.dict_of_username(username) # return the object {}
+        try:
+            index = self.data.index(aux) # get indice of object
+        except:
+            return False
+
+        date_string = datetime.datetime.strptime(aux['date'], '%d-%m-%Y %H:%M')
+        end_date = date_string
         if self.config['frequency'] == 'day':
-            end_date = date_1 + datetime.timedelta(hours=24)
+            end_date = date_string + datetime.timedelta(hours=24)
         elif self.config['frequency'] == 'day':
-            end_date = date_1 + datetime.timedelta(hours=1)
-        aux = self.dict_of_username(username)
-        index = self.data.index(aux)
+            end_date = date_string + datetime.timedelta(hours=1)
 
-        if aux['number'] == 0:
-            self.data[index]['date'] = date_now
-            print(2)
-        if aux['number'] == self.config['quantity'] and aux['date'] > end_date:
+        if self.data[index]['number'] == 0 or date_now > end_date:
+            self.data[index]['date'] = date_now_string
             self.data[index]['number'] = 0
-            # date
 
-        if aux['number'] < int(self.config['quantity']):
+        if self.data[index]['number'] == self.config['quantity'] and date_now > end_date: #reach the limit and date is higher than the limit
+            self.data[index]['number'] = 0
+            self.data[index]['date'] = date_now_string
+
+        if self.data[index]['number'] < int(self.config['quantity']):
             self.data[index]['number'] += 1
+        else:
+            return False
         print(self.data)
         self._save_json_file()
+        return True
 
     def save_new_username(self, username: str):
         if len(self.dict_of_username(username)) == 0:
-            self.data.append({'username': username, 'date': datetime.now().strftime('%d-%m-%Y %H:%M'), 'number': 0})
+            self.data.append({'username': username, 'date': datetime.datetime.now().strftime('%d-%m-%Y %H:%M'), 'number': 0})
             self._save_json_file()
