@@ -5,21 +5,24 @@ from selenium.webdriver.chrome import webdriver
 
 from script_files import import_login
 from locators.insta_locators import InstaLocators
+from script_files.json_file import JsonFile
 
 logger = logging.getLogger('scraping')  # singleton pattern
 
 
 class Automation:
-    def __init__(self, browser: webdriver):
+    def __init__(self, browser: webdriver, username: str, password: str):
         self.browser = browser
-        self.login_info = import_login.Login_info()
+        self.json = JsonFile()
+        self.username = username
+        self.password = password
+        self._login()
 
-    def login(self) -> bool:
-        if len(self.login_info.info) < 1:
-            return False
+    def _login(self) -> bool:
+
         self.browser.get("http://instagram.com")
-        username = self.login_info.info[0]['username']
-        password = self.login_info.info[0]['password']
+        username = self.username
+        password = self.password
         login_link = self.browser.find_element_by_xpath(InstaLocators.LOGIN_BOX)
         login_link.click()
         sleep(2)
@@ -54,6 +57,8 @@ class Automation:
         self.browser.get(url)
         for i in range(0, number_of_times):
             try:
+                if not self.json.increase_comment(self.username):
+                    break
                 #click in the comment box
                 comment_box = self.browser.find_element_by_xpath(InstaLocators.COMMENT_BOX)
                 comment_box.click()
@@ -66,7 +71,7 @@ class Automation:
                 comment_button = self.browser.find_element_by_xpath(InstaLocators.COMMENT_BUTTON)
                 comment_button.click()
                 logger.info('comment successfully')
-                sleep(2)
+                sleep(1)
             except:
                 logger.error('some error when trying comment some stuff')
                 return False

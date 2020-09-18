@@ -8,4 +8,7 @@ class FakeAcoountsLocators:
     PASSWORD2 = '//*[@id="signup-account-dialog"]/div/div/div[2]/div[1]/div[1]/div/div/div[1]/input[4]'
     REPEAT_PASSWORD = "//*[@id='signup-account-dialog']/div/div/div[2]/div[3]/div[1]/div/div/div/input"
     AGREE_TERMS = '//*[@id="signup-account-dialog"]/div/div/div[3]/div/input'
-    AT_LEAST_16= '//*[@id="signup-account-dialog"]/div/div/div[4]/div/input'
+    AT_LEAST_16 = '//*[@id="signup-account-dialog"]/div/div/div[4]/div/input'
+    NEXT_BUTTON = '//*[@id="signup-account-dialog"]/div/div/div[5]/button'
+    OK_BUTTON = '//*[@id="modal"]/div[2]/div/div/div/div[2]/button'
+    FINISH_BUTTON = '//*[@id="wizardDialogContent"]/div[4]/div/button'

@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../Udemy-Python/apis/.idea/apis.iml" filepath="$PROJECT_DIR$/../Udemy-Python/apis/.idea/apis.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/insta-bot.iml" filepath="$PROJECT_DIR$/.idea/insta-bot.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../Udemy-Python/web/.idea/web.iml" filepath="$PROJECT_DIR$/../Udemy-Python/web/.idea/web.iml" />
     </modules>
   </component>
 </project>
